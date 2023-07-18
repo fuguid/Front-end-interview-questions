@@ -1,0 +1,28 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs every day at midnight
+
+jobs:
+  sync:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: master  # or the branch you want to sync
+
+    - name: Setup Git
+      run: |
+        git config --global user.email "1258956799@qq.com"
+        git config --global user.name "zhangdi"
+
+    - name: Sync
+      run: |
+        git remote add upstream https://github.com/qdleader/qdleader.git  # replace with the original repo's url
+        git fetch upstream
+        git pull upstream master  # or the branch you want to sync
+        git push
