@@ -2,12 +2,12 @@ name: Sync Fork
 
 on:
   schedule:
-    # - cron: '0 0 * * *'  # Runs every day at midnight
-     - cron: '*/5 * * * *'  # Runs every 5 minutes
-  workflow_dispatch: # 添加这一行来允许手动触发
+    - cron: '*/5 * * * *'  # Runs every 5 minutes
+  workflow_dispatch:
 
 jobs:
   sync:
+
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +26,7 @@ jobs:
       run: |
         git remote add upstream https://github.com/qdleader/qdleader.git
         git fetch upstream
-        git pull --rebase upstream master
-        git push https://$GH_TOKEN@github.com/fuguid/Front-end-interview-questions.git HEAD:master
+        git pull --rebase=interactive upstream master
+        git push https://${{ secrets.GH_TOKEN }}@github.com/fuguid/Front-end-interview-questions.git HEAD:master || exit 0
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
