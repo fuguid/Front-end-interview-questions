@@ -27,4 +27,6 @@ jobs:
         git remote add upstream https://github.com/qdleader/qdleader.git
         git fetch upstream
         git pull --rebase upstream master
-        git push
+        git push origin HEAD:master
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
